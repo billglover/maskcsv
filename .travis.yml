@@ -3,13 +3,9 @@ language: go
 jobs:
   include:
     - stage: test
-      script: go test -v ./...
-    - stage: build
-      script: "GOOS=linux GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG-linux-amd64"
-      script: "GOOS=linux GOARCH=arm go build -o csvmask-$TRAVIS_TAG-linux-arm"
-      script: "GOOS=darwin GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG-darwin-amd64"
-      script: "GOOS=windows GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG.exe"
+      script: echo "stage 1" > test.txt
+    - stage: test
+      script: cat test
+      script: echo "stage 2" >> test.txt
     - stage: deploy
-      script: echo "Deploying to GitHub releases ..."
-    - stage: clean-up
-      script: go clean
+      script: cat test.txt
