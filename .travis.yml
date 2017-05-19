@@ -5,11 +5,11 @@ jobs:
     - stage: test
       script: go test -v ./...
     - stage: build
-        - script: "GOOS=linux GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG-linux-amd64"
-        - script: "GOOS=linux GOARCH=arm go build -o csvmask-$TRAVIS_TAG-linux-arm"
-        - script: "GOOS=darwin GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG-darwin-amd64"
-        - script: "GOOS=windows GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG.exe"
+        script: "GOOS=linux GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG-linux-amd64"
+        script: "GOOS=linux GOARCH=arm go build -o csvmask-$TRAVIS_TAG-linux-arm"
+        script: "GOOS=darwin GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG-darwin-amd64"
+        script: "GOOS=windows GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG.exe"
     - stage: deploy
-      script: echo "Deploying to GitHub releases ..."
+        script: echo "Deploying to GitHub releases ..."
     - stage: clean-up
-      script: go clean
+       script: go clean
