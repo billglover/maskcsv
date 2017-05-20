@@ -84,8 +84,6 @@ name 3,surname 3,name@name3.local,I don't speak
 	ir := csv.NewReader(strings.NewReader(in))
 	or := csv.NewReader(bytes.NewReader(b.Bytes()))
 
-	t.Log(b.String())
-
 	for {
 		irow, err := ir.Read()
 
