@@ -2,7 +2,7 @@ language: go
 
 script: go test -v ./...
 
-before-deploy:
+before_deploy:
   - GOOS=linux GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG-linux-amd64
   - GOOS=linux GOARCH=arm go build -o csvmask-$TRAVIS_TAG-linux-arm
   - GOOS=darwin GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG-darwin-amd64
@@ -10,8 +10,12 @@ before-deploy:
 
 deploy:
   provider: releases
-  api_key: "GITHUB OAUTH TOKEN"
-  file: "FILE TO UPLOAD"
+  api_key: $GITHUB_OAUTH_TOKEN
+  file:
+    - csvmask-$TRAVIS_TAG-linux-amd64
+    - csvmask-$TRAVIS_TAG-linux-arm
+    - csvmask-$TRAVIS_TAG-darwin-amd64
+    - csvmask-$TRAVIS_TAG.exe
   skip_cleanup: true
   on:
     tags: true
