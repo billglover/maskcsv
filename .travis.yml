@@ -1,16 +1,12 @@
 language: go
 
-script:
- - go test -v ./...
+script: go test -v ./...
 
 before-deploy:
- - GOOS=linux GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG-linux-amd64
- - GOOS=linux GOARCH=arm go build -o csvmask-$TRAVIS_TAG-linux-arm
- - GOOS=darwin GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG-darwin-amd64
- - GOOS=windows GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG.exe
-
- deploy:
-  skip_cleanup: true
+  - GOOS=linux GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG-linux-amd64
+  - GOOS=linux GOARCH=arm go build -o csvmask-$TRAVIS_TAG-linux-arm
+  - GOOS=darwin GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG-darwin-amd64
+  - GOOS=windows GOARCH=amd64 go build -o csvmask-$TRAVIS_TAG.exe
 
 deploy:
   provider: releases
@@ -21,4 +17,4 @@ deploy:
     tags: true
 
 after_deploy:
-- go clean
+  - go clean
