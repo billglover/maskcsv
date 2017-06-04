@@ -122,6 +122,10 @@ func cleanCSV(inf io.Reader, outf io.Writer, dcols, mcols columns, header bool) 
 		}
 	}
 	w.Flush()
+	err := w.Error()
+	if err != nil {
+		return fmt.Errorf("unable to flush output: %v", err)
+	}
 
 	return nil
 }
