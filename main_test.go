@@ -55,7 +55,7 @@ name 3,surname 3,,I don't speak
 
 	err := cleanCSV(strings.NewReader(in), out, dcols, mcols, header)
 	if err != nil {
-		t.Error(err)
+		t.Errorf("unexpected error: %v", err)
 	}
 
 	if desired != b.String() {
@@ -78,7 +78,7 @@ name 3,surname 3,name@name3.local,I don't speak
 
 	err := cleanCSV(strings.NewReader(in), out, dcols, mcols, header)
 	if err != nil {
-		t.Error(err)
+		t.Errorf("unexpected error: %v", err)
 	}
 
 	ir := csv.NewReader(strings.NewReader(in))
@@ -91,7 +91,7 @@ name 3,surname 3,name@name3.local,I don't speak
 			break
 		}
 		if err != nil {
-			t.Error(err)
+			t.Errorf("unexpected error when reading expected data: %v", err)
 		}
 
 		orow, err := or.Read()
@@ -100,7 +100,7 @@ name 3,surname 3,name@name3.local,I don't speak
 			break
 		}
 		if err != nil {
-			t.Error(err)
+			t.Errorf("unexpected error when reading results of processing: %v", err)
 		}
 
 		if header {
@@ -135,7 +135,7 @@ name 3,surname 3,,I don't speak
 
 	err := cleanCSV(strings.NewReader(in), out, dcols, mcols, true)
 	if err != nil {
-		t.Error(err)
+		t.Errorf("unexpected error: %v", err)
 	}
 
 	if desired != b.String() {
