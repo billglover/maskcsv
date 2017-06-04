@@ -88,7 +88,7 @@ func cleanCSV(inf io.Reader, outf io.Writer, dcols, mcols columns, header bool) 
 	w := csv.NewWriter(outf)
 
 	for {
-		r, err := r.Read()
+		record, err := r.Read()
 
 		if err == io.EOF {
 			break
@@ -98,22 +98,22 @@ func cleanCSV(inf io.Reader, outf io.Writer, dcols, mcols columns, header bool) 
 		}
 
 		if header {
-			w.Write(r)
+			w.Write(record)
 			header = false
 			continue
 		}
 
-		err = maskCols(mcols, &r, salt)
+		err = maskCols(mcols, &record, salt)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		err = deleteCols(dcols, &r)
+		err = deleteCols(dcols, &record)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		w.Write(r)
+		w.Write(record)
 	}
 	w.Flush()
 
