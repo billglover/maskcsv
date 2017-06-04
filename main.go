@@ -94,26 +94,32 @@ func cleanCSV(inf io.Reader, outf io.Writer, dcols, mcols columns, header bool) 
 			break
 		}
 		if err != nil {
-			log.Fatal(err)
+			return fmt.Errorf("unable to read record: %v", err)
 		}
 
 		if header {
-			w.Write(record)
+			err := w.Write(record)
+			if err != nil {
+				return fmt.Errorf("unable to write header record: %v", err)
+			}
 			header = false
 			continue
 		}
 
 		err = maskCols(mcols, &record, salt)
 		if err != nil {
-			log.Fatal(err)
+			return fmt.Errorf("unable to mask columns: %v", err)
 		}
 
 		err = deleteCols(dcols, &record)
 		if err != nil {
-			log.Fatal(err)
+			return fmt.Errorf("unable to delete columns: %v", err)
 		}
 
-		w.Write(record)
+		err = w.Write(record)
+		if err != nil {
+			return fmt.Errorf("unable to write record: %v", err)
+		}
 	}
 	w.Flush()
 
